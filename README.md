@@ -1,6 +1,6 @@
-# Hanover County Parcel Map Generation Tool
+# Generic Map Generation Tool
 
-> last updated 2025.08.13
+> last updated 2025.09.23
 
 
 ## Summary
@@ -8,9 +8,9 @@ Contains an ArcGIS Pro project consisting of a map, two print layouts, and an ar
 
 
 ## Description
-The contents of this repo are maintained by the Hanover IT CD/GIS Team and can be utilized by any County employee with access to the ArcGIS Pro software to generate pre-configured, parcel-centric maps. The essential component of this module is an **ArcGIS Pro** project named `MapCreator.aprx`. 
+The contents of this repo are maintained by Kristin Dillard. The essential component of this module is an **ArcGIS Pro** project named `MapCreator.aprx`. 
 
-The project includes a toolbox called `MapCreator.tbx`. This toolbox contains one script called `Map Creator`. When this tool is opened in ArcGIS Pro, the user can set the parameters needed to generate the desired map, including the parcel GPINs, a map title, descriptive text, map scale and map type.
+The project includes a toolbox called `MapCreator.tbx`. This toolbox contains one script called `Map Creator`. When this tool is opened in ArcGIS Pro, the user can set the parameters needed to generate the desired map, including the subject parcel GPINs, a map title, descriptive text, map scale and map type.
 
 ## Dependencies
 
@@ -19,32 +19,16 @@ The project includes a toolbox called `MapCreator.tbx`. This toolbox contains on
  - Python 3.7.11 and libraries installed with ArcGIS Pro 2.9+
 
 #### Data Access
-This module requires an `*.sde` connection file to the `GISHANOVER` geodatabase with operating system authentication. This file is provided in the `connections` folder in the repo.
+This module requires Enterprise database `*.sde` connection files or file geodatabase directories containing the source feature classes defined in the configuration .ini files. These should be included in the `connections` folder.
 
 ## Outputs
 
-### Hanover County GIS Data
-GIS data layers are classified as either 'static' (seldomly updated layers such as the county boundary) or 'dynamic' (periodically updated data such as parcel boundaries).
-When a new map is created using the `Map Creator` tool, the 'dynamic' feature classes below are copied into the user's local repo in a geodatabase named for the date of capture:
+### GIS Data
+GIS data layers are classified as either 'static' (seldomly updated layers such as legal county boundaries) or 'dynamic' (periodically updated data such as parcel boundaries).
+The map feature classes are sorted into these two categories in the project configuration .ini files.
 
-  ```
-    GISHANOVER.LAND_RECORDS.Parcels_with_Data
-    GISHANOVER.PLANNING.Zoning
-    GISHANOVER.PLANNING.LandUse
-    GISHANOVER.PLANNING.Conditional_Use_Permits
-    GISGEN.GIS_OFFICE.STREET_CENTERLINE_DATASET\\GISGEN.GIS_OFFICE.STREET_CENTERLINES
+When a new map is created using the `Map Creator` tool, the 'dynamic' feature classes defined in the project configuration file are copied into a geodatabase named for the date of capture, while the 'static' feature classes are copied into a geodatabase named 'static'.
 
-  ```
-The 'static' feature classes below are copied into the user's local repo in a geodatabase named 'static':
-
-  ```
-    GISGEN.GIS_OFFICE.COUNTY_BOUNDARY_DATASET\\GISGEN.GIS_OFFICE.COUNTY_BOUNDARY
-    GISHANOVER.PLANIMETRICS.TREES
-    GISHANOVER.WATER.STREAMS
-    GISHANOVER.PLANIMETRICS.BUILDINGS
-    GISHANOVER.PLANNING.Overlay_Historical
-    GISHANOVER.REGISTRAR.MAGISTERIAL_DISTRICTS
-  ```
 
 ## Usage
 
@@ -66,7 +50,7 @@ The 'static' feature classes below are copied into the user's local repo in a ge
 
     ![generatemap](images/generatemap.png)
 
-4. The data layers are pulled into two file geodatabases - one for 'static' data such as the county boundary, and the other for more dynamic data, such as parcel boundaries. The file geodatabase for the dynamic data will be named using the date the data was captured. If the data for the desired map has not already been pulled down into a file geodatabase, select 'Yes' for the 'New Map?' parameter. New data for the dynamic layers will be pulled from the Enterprise geodatabase into a new file geodatabase named using today's date. If this is the first time the Map Creator tool has been run, you'll need to select 'Yes' to bring down the static data also. This is also the case if the tool has already been run, but the existing static data needs to be refreshed. If the existing static data can be used as is, select 'No'.
+4. The data layers are pulled into two file geodatabases - one for 'static' data, and the other for 'dynamic' data. The file geodatabase for the dynamic data will be named using the date the data was captured. If the data for the desired map has not already been pulled down into a file geodatabase, select 'Yes' for the 'New Map?' parameter. New data for the dynamic layers will be pulled from the source Enterprise geodatabase or file geodatabase into a new file geodatabase named using today's date. If this is the first time the Map Creator tool has been run, you'll need to select 'Yes' to bring down the static data also. This is also the case if the tool has already been run, but the existing static data needs to be refreshed. If the existing static data can be used as is, select 'No'.
     
     ![newmapyes](images/newmapyes.png)
 
@@ -74,7 +58,7 @@ The 'static' feature classes below are copied into the user's local repo in a ge
     
     ![newmapno](images/newmapno.png)
 
-6. With at least one GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
+6. With at least one parcel GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
 
 7. If the map is ready for export, click the Share tab and select 'Export Layout'.
 
