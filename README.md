@@ -8,7 +8,7 @@ Contains an ArcGIS Pro project consisting of a map, two print layouts, and an ar
 
 
 ## Description
-The contents of this repo are maintained by Kristin Dillard. The essential component of this module is an **ArcGIS Pro** project named `MapCreator.aprx`. 
+The contents of this repo are maintained by Kristin Dillard, and were initally created for use by the Hanover County GIS department. The essential component of this module is an **ArcGIS Pro** project named `MapCreator.aprx`. 
 
 The project includes a toolbox called `MapCreator.tbx`. This toolbox contains one script called `Map Creator`. When this tool is opened in ArcGIS Pro, the user can set the parameters needed to generate the desired map, including the subject parcel GPINs, a map title, descriptive text, map scale and map type.
 
