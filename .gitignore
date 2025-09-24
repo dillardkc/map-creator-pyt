@@ -1,3 +1,14 @@
 logs/
 **/gdb/
 **/*.GpMessages/
+*.gdbindexes
+*.gdbtable
+*.gdbtablx
+*.horizon
+*.spx
+projects/GpMessages/
+.idea/
+*.atx
+*.freelist
+projects/staticdata.gdb/timestamps
+projects/Index/
