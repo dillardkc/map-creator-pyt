@@ -94,9 +94,10 @@ def generate_sources(gdb):
         arcpy.env.overwriteOutput = True
         feature_sources = config['dynamic_inputs']
         for fc in feature_sources:
-            arcpy.AddMessage(f"Copying '{feature_sources[fc].split('.')[-1]}' to file gdb...")
+            fcname = feature_sources[fc].split('\\')[-1]
+            arcpy.AddMessage(f"Copying '{fcname}' to file gdb...")
             enterprise_fc = os.path.join(connections_path, feature_sources[fc])
-            arcpy.CopyFeatures_management(enterprise_fc, feature_sources[fc].split('.')[-1])
+            arcpy.CopyFeatures_management(enterprise_fc, fcname)
     else:
         arcpy.AddMessage(f'Skipping refresh of parcel data. Data for {mapdate_str} will be used...')
 
