@@ -19,7 +19,7 @@ The project includes a toolbox called `MapCreator.tbx`. This toolbox contains on
  - Python 3.7.11 and libraries installed with ArcGIS Pro 2.9+
 
 #### Data Access
-This module requires Enterprise database `*.sde` connection files or file geodatabase directories containing the source feature classes defined in the configuration .ini files. These should be included in the `connections` folder.
+This module requires Enterprise database `*.sde` connection files or file geodatabase directories containing the source feature classes defined in the configuration .ini files. These should be added to the `connections` folder.
 
 ## Outputs
 
