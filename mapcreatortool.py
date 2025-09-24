@@ -124,7 +124,7 @@ def create_temp_parcels(fullparcels):
 
 
 def calc_fields(temp_mp):
-    # extract ownership info from selected parcels
+    # extract ownership info from each selected parcel and concatenate to create ownership list
     def unique_values(table, field):
         data = arcpy.da.TableToNumPyArray(table, [field])
         return numpy.unique(data[field])
