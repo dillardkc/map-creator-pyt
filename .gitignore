@@ -6,6 +6,7 @@ logs/
 *.gdbtablx
 *.horizon
 *.spx
+*.gdb
 projects/GpMessages/
 .idea/
 *.atx
