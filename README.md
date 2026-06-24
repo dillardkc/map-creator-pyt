@@ -4,7 +4,7 @@
 
 
 ## Summary
-Contains an ArcGIS Pro project consisting of a map, two print layouts, and an arcpy script for generating parcel-centric maps.
+Contains an ArcGIS Pro project consisting of a map, two print layouts, and an arcpy script for generating parcel-centric maps. There are five pre-configured map types; General Parcel, Zoning, Land Use, Historical, and Aerials. Each map type has a different list of relevant layers to be toggled on for visibility.
 
 
 ## Description
@@ -24,13 +24,28 @@ This module requires Enterprise database `*.sde` connection files or file geodat
 ## Outputs
 
 ### GIS Data
-GIS data layers are classified as either 'static' (seldomly updated layers such as legal county boundaries) or 'dynamic' (periodically updated data such as parcel boundaries).
+GIS data layers are classified as either 'static' (seldomly updated layers such as legal county boundaries) or 'dynamic' (regularly updated data such as parcel boundaries).
 The map feature classes are sorted into these two categories in the project configuration .ini files.
 
 When a new map is created using the `Map Creator` tool, the 'dynamic' feature classes defined in the project configuration file are copied into a geodatabase named for the date of capture, while the 'static' feature classes are copied into a geodatabase named 'static'.
 
 
 ## Usage
+### Configuration
+There are two .ini configuration files included as part of this repo. The sections to be configured are 'dynamic_inputs', 'static_inputs', and 'layer_lists'. Configure these sections to pull the data you require for your maps. Make sure the map type choices in the layer list match the map type options in the script parameters 'Map Type' value list exactly.
+    ![projecttab](images/maptypeparameters.png)
+
+Also, make sure that the layer names listed for each map type match the layer names in the project map exactly. For example, the layer 'Historical district' in the Table of Contents below:
+
+![projecttab](images/layerlist.png)
+
+Might not behave properly when the map type 'Historical' is selected in the script parameters, if it's listed in the config like this:
+
+![projecttab](images/layerlistconfig.png)
+
+due to to the difference in capitalization. Likewise, the paths to the source datasets listed in the 'dynamic_inputs' and 'static_inputs' sections must match the .sde connection files saved to the connections folder.
+
+Now, the table of contents must be configured to match the layer lists. You might choose to remove all layers from the Map table of contents, choose an arbitrary and then run the tool with New Map? = Yes and Refresh Static Data? = Yes to create the local geodatabases once the configuration is set. Once the 
 
 1. Open the project `MapCreator.aprx` and verify that ArcGIS Pro is *not* set to remove layers that reference data overwritten by geoprocessing tools. This setting can be found by clicking the Project tab:
 
@@ -44,7 +59,7 @@ When a new map is created using the `Map Creator` tool, the 'dynamic' feature cl
 
     ![uncheckremove](images/uncheckremove.png)
 
-2. The available map layouts will be listed under the Layouts section of the Catalog pane. Currently, an 8.5x11 and an 11x14 layout are available. The layouts include a map frame and several lines of dynamic text that will change depending on the parameters set in the `Map Creator` script. Upon opening the `MapCreator.aprx` project, the layout will display as it appeared the last time the project was saved.
+2. The available map layouts will be listed under the Layouts section of the Catalog pane. Currently, an 8.5x11 and an 11x17 layout are available. The layouts include a map frame and several lines of dynamic text that will change depending on the parameters set in the `Map Creator` script. Upon opening the `MapCreator.aprx` project, the layout will display as it appeared the last time the project was saved.
 
 3. To generate a new map, expand the `Toolboxes` section and double-click `Map Creator`. In the Parameters section of the geoprocessing pane, enter the requested information. Fields marked with an asterisk are required.
 
@@ -53,6 +68,7 @@ When a new map is created using the `Map Creator` tool, the 'dynamic' feature cl
 4. The data layers are pulled into two file geodatabases - one for 'static' data, and the other for 'dynamic' data. The file geodatabase for the dynamic data will be named using the date the data was captured. If the data for the desired map has not already been pulled down into a file geodatabase, select 'Yes' for the 'New Map?' parameter. New data for the dynamic layers will be pulled from the source Enterprise geodatabase or file geodatabase into a new file geodatabase named using today's date. If this is the first time the Map Creator tool has been run, you'll need to select 'Yes' to bring down the static data also. This is also the case if the tool has already been run, but the existing static data needs to be refreshed. If the existing static data can be used as is, select 'No'.
     
     ![newmapyes](images/newmapyes.png)
+
 
 5. If the data for the desired map has already been generated, select 'No' for the 'New Map?' parameter, and then select the date the existing data was captured so that the tool knows which file geodatabase to pull from. If no file geodatabase for the selected date exists, the 'New Map?' parameter will throw an error, preventing the tool from running.
     
