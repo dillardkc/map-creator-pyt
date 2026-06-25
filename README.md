@@ -19,7 +19,7 @@ The project includes a toolbox called `MapCreator.tbx`. This toolbox contains on
  - Python 3.7.11 and libraries installed with ArcGIS Pro 2.9+
 
 #### Data Access
-This module requires Enterprise database `*.sde` connection files or file geodatabase directories containing the source feature classes defined in the configuration .ini files. These should be added to the `connections` folder, and the feature class source paths updated to match in the `static_data` and `dynamic_data` sections of each of the configuration .ini files.
+This module requires Enterprise database `*.sde` connection files or file geodatabase directories containing the source feature classes defined in the configuration .ini file. These should be added to the `connections` folder, and the feature class source paths updated to match in the `static_data` and `dynamic_data` sections of the configuration .ini file.
 
 ## Outputs
 
@@ -27,12 +27,12 @@ This module requires Enterprise database `*.sde` connection files or file geodat
 GIS data layers are classified as either 'static' (seldomly updated layers such as legal county boundaries) or 'dynamic' (regularly updated data such as parcel boundaries).
 The map feature classes are sorted into these two categories in the project configuration .ini files.
 
-When a new map is created using the `Map Creator` tool, the 'dynamic' feature classes defined in the project configuration file are copied into a geodatabase named for the date of capture, while the 'static' feature classes are copied into a geodatabase named 'static'.
+When a new map is created using the `Map Creator` tool, the 'dynamic' feature classes defined in the project configuration file are copied into a geodatabase named for the date of capture. The 'static' feature classes are copied into a geodatabase named 'static'.
 
 
 ## Usage
 ### Configuration
-There are two .ini configuration files included as part of this repo. The sections to be configured are 'dynamic_inputs', 'static_inputs', and 'layer_lists'. Configure these sections to pull the data you require for your maps. Make sure the map type choices in the layer list match the map type options in the script parameters 'Map Type' value list exactly.
+There is one .ini configuration file included as part of this repo. The sections to be configured are 'dynamic_inputs', 'static_inputs', and 'layer_lists'. Configure these sections to pull the data you require for your maps. Make sure the map type choices in the layer list match the map type options in the script parameters 'Map Type' value list exactly.
     ![projecttab](images/maptypeparameters.png)
 
 Also, make sure that the layer names listed for each map type match the layer names in the project map exactly. For example, the layer 'Historical district' in the Table of Contents below:
@@ -43,9 +43,9 @@ Might not behave properly when the map type 'Historical' is selected in the scri
 
 ![projecttab](images/layerlistconfig.png)
 
-due to to the difference in capitalization. Likewise, the paths to the source datasets listed in the 'dynamic_inputs' and 'static_inputs' sections must match the .sde connection files saved to the connections folder.
+due to the difference in capitalization. Likewise, the paths to the source datasets listed in the 'dynamic_inputs' and 'static_inputs' sections must match the .sde connection files saved to the connections folder.
 
-Now, the table of contents must be configured to match the layer lists. You might choose to remove all layers from the Map table of contents, choose an arbitrary and then run the tool with New Map? = Yes and Refresh Static Data? = Yes to create the local geodatabases once the configuration is set. Once the 
+Now, the table of contents must be configured to match the layer lists. You might choose to remove all layers from the Map table of contents, choose an arbitrary parcel GPIN, and then run the tool with New Map? = Yes and Refresh Static Data? = Yes to create the local geodatabases once the configuration is set. Once the 
 
 1. Open the project `MapCreator.aprx` and verify that ArcGIS Pro is *not* set to remove layers that reference data overwritten by geoprocessing tools. This setting can be found by clicking the Project tab:
 
@@ -59,7 +59,7 @@ Now, the table of contents must be configured to match the layer lists. You migh
 
     ![uncheckremove](images/uncheckremove.png)
 
-2. The available map layouts will be listed under the Layouts section of the Catalog pane. Currently, an 8.5x11 and an 11x17 layout are available. The layouts include a map frame and several lines of dynamic text that will change depending on the parameters set in the `Map Creator` script. Upon opening the `MapCreator.aprx` project, the layout will display as it appeared the last time the project was saved.
+2. The available map layouts will be listed under the Layouts section of the Catalog pane. Currently, an 8.5x11 and a 11x17 layout are available. The layouts include a map frame and several lines of dynamic text that will change depending on the parameters set in the `Map Creator` script. Upon opening the `MapCreator.aprx` project, the layout will display as it appeared the last time the project was saved.
 
 3. To generate a new map, expand the `Toolboxes` section and double-click `Map Creator`. In the Parameters section of the geoprocessing pane, enter the requested information. Fields marked with an asterisk are required.
 
@@ -70,22 +70,22 @@ Now, the table of contents must be configured to match the layer lists. You migh
     ![newmapyes](images/newmapyes.png)
 
 
-5. If the data for the desired map has already been generated, select 'No' for the 'New Map?' parameter, and then select the date the existing data was captured so that the tool knows which file geodatabase to pull from. If no file geodatabase for the selected date exists, the 'New Map?' parameter will throw an error, preventing the tool from running.
+1. If the data for the desired map has already been generated, select 'No' for the 'New Map?' parameter, and then select the date the existing data was captured so that the tool knows which file geodatabase to pull from. If no file geodatabase for the selected date exists, the 'New Map?' parameter will throw an error, preventing the tool from running.
     
     ![newmapno](images/newmapno.png)
 
-6. With at least one parcel GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
+2. With at least one parcel GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
 
-7. If the map is ready for export, click the Share tab and select 'Export Layout'.
+3. If the map is ready for export, click the Share tab and select 'Export Layout'.
 
     ![exportlayout](images/exportlayout.png)
 
-8. In the Properties section of the Export Layout window, set the desired file type, location, and file name of the map. Click Export. The map will be saved to disk.
+4. In the Properties section of the Export Layout window, set the desired file type, location, and file name of the map. Click Export. The map will be saved to disk.
 
     ![saveexport](images/saveexport.png)
 
 ### Add or Remove Layers, Shape and/or Text Elements
-1. Sometimes elements need to be added or removed from the map. If the map needs these additional changes, this can be done before exporting the map pdf. Make sure that the map creator tool has already been run so that the map layout is set where you want it. It is best to make a copy of this base layout first, and make these customizations to the copy.  
+1. Sometimes elements need to be added or removed from the map. If the map needs these additional changes, this can be done before exporting the map PDF. Make sure that the map creator tool has already been run so that the map layout is set where you want it. It is best to make a copy of this base layout first, and make these customizations to the copy.  
 
 #### Create a Copy of a Layout
 1. Right-click the layout in the Layouts section of the Catalog pane and select 'Copy'.

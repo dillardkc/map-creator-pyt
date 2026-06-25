@@ -4,12 +4,12 @@ import os
 from datetime import datetime
 import numpy
 
-dir_name = os.path.dirname(__file__)
+dir_name = str(os.path.dirname(__file__))
 
 arcpy.AddMessage("Beginning script at {}".format(datetime.now().strftime("%H:%M:%S")))
 
 config = configparser.ConfigParser()
-config.read('config/local.ini')
+config.read('config/prod.ini')
 
 # set input parameters
 newmap = arcpy.GetParameterAsText(0)
@@ -175,30 +175,33 @@ def calc_overlay():
     arcpy.FeatureToPoint_management(tempparcels, centerpoint, "INSIDE")
     arcpy.SelectLayerByLocation_management('magisterialdistrict_layer', 'INTERSECT', centerpoint)
 
+    magdist = "Unknown Magisterial District"
     with arcpy.da.SearchCursor('magisterialdistrict_layer', 'PROPDIST') as rows:
         for row in rows:
             magdist = str(row[0] + " Magisterial District")
             arcpy.AddMessage(f'Magisterial District: {magdist}')
 
     # calculate magisterial district layer to current magisterial district
-    whereclause = "magdist = '" + str(magdist) + "'"
+    whereclause = "OBJECTID IS NOT NULL"
     arcpy.MakeFeatureLayer_management(tempparcels, "tempparcels_layer")
     arcpy.SelectLayerByAttribute_management("tempparcels_layer", "NEW_SELECTION", whereclause)
     arcpy.CalculateField_management(tempparcels, "magdist", '"' + str(magdist) + '"', "PYTHON3")
 
 
 def set_map_appearance(scale):
-    scalefeet = str(scale[6:9])
+    scalefeet = str(scale)[6:-2]
     # buffer centerpoint to use for scaling
-    buffer = os.path.join(project_gdb, 'buffer_' + str(scale[6:9]))
+    buffer = os.path.join(project_gdb_path, 'buffer_' + scalefeet)
     if arcpy.Exists(buffer):
         arcpy.Delete_management(buffer)
 
     arcpy.AddMessage("Creating buffer on parcel selection centerpoint to scale map to: " + str(scale))
     if mapsize == '8.5 x 11':
         size_config = 'buffer_sizes_8.5x11'
-    elif mapsize == '11 x 14':
-        size_config = 'buffer_sizes_11x14'
+    elif mapsize == '11 x 17':
+        size_config = 'buffer_sizes_11x17'
+    else:
+        size_config = 'buffer_sizes_8.5x11'
 
     size = config.get(size_config, scalefeet)
     # buffer centerpoint to use for scaling
@@ -213,14 +216,14 @@ def set_map_appearance(scale):
     # get correct layout for desired map print size
     layout = next(layout for layout in aprx.listLayouts() if layout.name == mapsize)
     arcpy.AddMessage(f"Layout: {layout.name}.")
-    mapframe = layout.listElements("MAPFRAME_ELEMENT")[0]
-    arcpy.AddMessage(f"Map Frame: {mapframe.name}.")
+    mapframe = layout.listElements("MAPFRAME_ELEMENT")[0]  # type: ignore
     mapcreator = aprx.listMaps()[0]
-    arcpy.AddMessage(f"Map: {mapcreator.name}.")
     desc = arcpy.Describe(buffer)
     extent = desc.extent
     new_extent = arcpy.Extent(extent.XMin, extent.YMin, extent.XMax, extent.YMax)
-    mapframe.camera.setExtent(new_extent)
+    cam = mapframe.camera  # type: ignore
+    cam.setExtent(new_extent)
+    mapframe.camera = cam  # type: ignore
 
     map_layer_names = config.get('layer_lists', maptype)
     fulllyrlist = mapcreator.listLayers()
@@ -230,7 +233,7 @@ def set_map_appearance(scale):
             if lyr.supports('VISIBLE'):
                 lyr.visible = True
             else:
-                arcpy.AddMessage(f"{lyr} layer visibility cannot be toggled.")
+                arcpy.AddMessage(f"{lyr.name} layer visibility cannot be toggled.")
         else:
             lyr.visible = False
 
@@ -244,7 +247,6 @@ def reconfigure_layers(gdb):
     mapcreator = aprx.listMaps()[0]
     for lyr in mapcreator.listLayers():
         if lyr.supports("DATASOURCE"):
-            # Example: Update a file geodatabase connection
             current_conn = os.path.dirname(lyr.dataSource)
             if current_conn != gdb:
                 lyr.updateConnectionProperties(current_conn, gdb)
