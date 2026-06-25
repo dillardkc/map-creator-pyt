@@ -9,7 +9,7 @@ dir_name = str(os.path.dirname(__file__))
 arcpy.AddMessage("Beginning script at {}".format(datetime.now().strftime("%H:%M:%S")))
 
 config = configparser.ConfigParser()
-config.read('config/prod.ini')
+config.read('config/demo.ini')
 
 # set input parameters
 newmap = arcpy.GetParameterAsText(0)
@@ -192,7 +192,7 @@ def set_map_appearance(scale):
     scalefeet = str(scale)[6:-2]
     # buffer centerpoint to use for scaling
     buffer = os.path.join(project_gdb_path, 'buffer_' + scalefeet)
-    if arcpy.Exists(buffer):
+    if not arcpy.Exists(buffer):
         arcpy.Delete_management(buffer)
 
     arcpy.AddMessage("Creating buffer on parcel selection centerpoint to scale map to: " + str(scale))
