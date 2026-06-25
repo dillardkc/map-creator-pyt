@@ -33,15 +33,15 @@ When a new map is created using the `Map Creator` tool, the 'dynamic' feature cl
 ## Usage
 ### Configuration
 There is one .ini configuration file included as part of this repo. The sections to be configured are 'dynamic_inputs', 'static_inputs', and 'layer_lists'. Configure these sections to pull the data you require for your maps. Make sure the map type choices in the layer list match the map type options in the script parameters 'Map Type' value list exactly.
+
     ![projecttab](images/maptypeparameters.png)
 
 Also, make sure that the layer names listed for each map type match the layer names in the project map exactly. For example, the layer 'Historical district' in the Table of Contents below:
 
-![projecttab](images/layerlist.png)
+   ![projecttab](images/layerlist.png)
 
 Might not behave properly when the map type 'Historical' is selected in the script parameters, if it's listed in the config like this:
-
-![projecttab](images/layerlistconfig.png)
+    ![projecttab](images/layerlistconfig.png)
 
 due to the difference in capitalization. Likewise, the paths to the source datasets listed in the 'dynamic_inputs' and 'static_inputs' sections must match the .sde connection files saved to the connections folder.
 
@@ -70,17 +70,17 @@ Now, the table of contents must be configured to match the layer lists. You migh
     ![newmapyes](images/newmapyes.png)
 
 
-1. If the data for the desired map has already been generated, select 'No' for the 'New Map?' parameter, and then select the date the existing data was captured so that the tool knows which file geodatabase to pull from. If no file geodatabase for the selected date exists, the 'New Map?' parameter will throw an error, preventing the tool from running.
+5. If the data for the desired map has already been generated, select 'No' for the 'New Map?' parameter, and then select the date the existing data was captured so that the tool knows which file geodatabase to pull from. If no file geodatabase for the selected date exists, the 'New Map?' parameter will throw an error, preventing the tool from running.
     
     ![newmapno](images/newmapno.png)
 
-2. With at least one parcel GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
+6. With at least one parcel GPIN, the map scale, and the map type set in the tool parameters, click Run. The map frame will pan to the desired area and extent, and the dynamic text elements will update with the map title, ownership information, and magisterial district.
 
-3. If the map is ready for export, click the Share tab and select 'Export Layout'.
+7. If the map is ready for export, click the Share tab and select 'Export Layout'.
 
     ![exportlayout](images/exportlayout.png)
 
-4. In the Properties section of the Export Layout window, set the desired file type, location, and file name of the map. Click Export. The map will be saved to disk.
+8. In the Properties section of the Export Layout window, set the desired file type, location, and file name of the map. Click Export. The map will be saved to disk.
 
     ![saveexport](images/saveexport.png)
 
