@@ -1,0 +1,83 @@
+{
+    "config": [
+    {
+      "proj_gdb": "CaseMap.gdb",
+      "connections_folder": "connections"
+    }
+  ],
+
+  "inputs": [
+    {
+      "name": "taxparcels",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.LAND_RECORDS.Parcels_with_Data"
+    },
+    {
+      "name": "roads",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.TRANSPORTATION.STREET_CENTERLINES"
+    },
+    {
+      "name": "countyboundary",
+      "source": "GISDBCLUSTER_GISGEN_os.sde\\GISGEN.GIS_OFFICE.COUNTY_BOUNDARY_DATASET\\GISGEN.GIS_OFFICE.COUNTY_BOUNDARY"
+    },
+    {
+      "name": "subgrid",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.MAP_GRID.INDEX_SUB_GRID"
+    },
+    {
+      "name": "grid",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.MAP_GRID.MapBookGrid"
+    },
+    {
+      "name": "buildings",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANIMETRICS.BUILDINGS"
+    },
+    {
+      "name": "airport",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Overlay_Airport"
+    },
+    {
+      "name": "US1overlay",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Overlay_Route1"
+    },
+    {
+      "name": "urbanoverlay",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Overlay_Urban_Service_Area"
+    },
+    {
+      "name": "ashlandoverlay",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Overlay_Ashland"
+    },
+    {
+      "name": "ashlandtown",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.ASHLAND.TOWN_BOUNDARY"
+    },
+    {
+      "name": "historicaldistrict",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Overlay_Historical"
+    },
+    {
+      "name": "magisterialdistrict",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.REGISTRAR.MAGISTERIAL_DISTRICTS"
+    },
+    {
+      "name": "zoning",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Zoning"
+    },
+    {
+      "name": "landuse",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.LandUse"
+    },
+    {
+      "name": "cup",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANNING.Conditional_Use_Permits"
+    },
+    {
+      "name": "treelines",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.PLANIMETRICS.TREES"
+    },
+    {
+      "name": "waterfeatures",
+      "source": "GISDBCLUSTER_GISHANOVER_os.sde\\GISHANOVER.WATER.STREAMS"
+    }
+  ]
+}
